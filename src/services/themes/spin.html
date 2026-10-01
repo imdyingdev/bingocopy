@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dwow</title>
+<style>
+  :root{
+    --bg: #0b0b10;
+    --panel: #15151d;
+    --line: #2a2a35;
+    --text: #eee7d8;
+    --muted: #8a8a9a;
+    --gold: #d4af37;
+  }
+  *{ box-sizing: border-box; }
+  html, body{
+    margin:0; padding:0; height:100%;
+    background: radial-gradient(ellipse at 50% -10%, #1c1c26 0%, var(--bg) 60%);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+  }
+  body{
+    display:flex; align-items:center; justify-content:center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .rig{
+    width: 100%;
+    max-width: 380px;
+    text-align:center;
+  }
+  .rig h1{
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 4px;
+  }
+  .rig .sub{
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 22px;
+    opacity: 0.7;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px;
+    border-radius: 20px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .cell{
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    display:flex; align-items:center; justify-content:center;
+    font-weight: 700;
+    font-size: 22px;
+    color: rgba(0,0,0,0.55);
+    filter: saturate(0.85) brightness(0.85);
+    transform: scale(0.96);
+    transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  }
+
+  .cell.active{
+    transform: scale(1.06);
+    filter: saturate(1.15) brightness(1.15);
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.9),
+      0 0 24px 4px currentColor;
+    z-index: 2;
+  }
+
+  .cell.winner{
+    animation: pulseWin 0.7s ease-in-out infinite;
+  }
+
+  @keyframes pulseWin{
+    0%, 100% {
+      transform: scale(1.06);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.9), 0 0 24px 4px currentColor;
+    }
+    50% {
+      transform: scale(1.14);
+      box-shadow: 0 0 0 4px rgba(255,255,255,1), 0 0 46px 12px currentColor;
+    }
+  }
+
+  .c0{ background:#e63946; color:#e63946; }
+  .c1{ background:#3a86ff; color:#3a86ff; }
+  .c2{ background:#2dc653; color:#2dc653; }
+  .c3{ background:#ffbe0b; color:#ffbe0b; }
+  .c4{ background:#8338ec; color:#8338ec; }
+  .c5{ background:#fb5607; color:#fb5607; }
+  .c6{ background:#00b4d8; color:#00b4d8; }
+  .c7{ background:#ff006e; color:#ff006e; }
+  .c8{ background:var(--gold); color:var(--gold); }
+
+  .result{
+    margin-top: 18px;
+    min-height: 20px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    color: var(--muted);
+  }
+  .result b{
+    color: var(--text);
+  }
+
+  .controls{
+    margin-top: 16px;
+    display:flex;
+    gap: 10px;
+  }
+
+  button{
+    flex: 1;
+    padding: 13px 0;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: transform 80ms ease, opacity 150ms ease, background 150ms ease;
+    background: #1e1e28;
+    color: var(--text);
+  }
+  button:active{ transform: scale(0.97); }
+  button:disabled{ opacity: 0.35; cursor: not-allowed; }
+
+  #playBtn{
+    background: linear-gradient(180deg, #2dc653, #1e9e42);
+    border-color: transparent;
+    color: #06210f;
+  }
+  #stopBtn{
+    background: linear-gradient(180deg, #e63946, #b6222d);
+    border-color: transparent;
+    color: #2a0507;
+  }
+</style>
+</head>
+<body>
+
+  <div class="rig">
+    <p class="sub">Potik na yan</p>
+
+    <div class="grid" id="grid">
+      <div class="cell c0" data-name="Red"></div>
+      <div class="cell c1" data-name="Blue"></div>
+      <div class="cell c2" data-name="Green"></div>
+      <div class="cell c3" data-name="Yellow"></div>
+      <div class="cell c4" data-name="Purple"></div>
+      <div class="cell c5" data-name="Orange"></div>
+      <div class="cell c6" data-name="Cyan"></div>
+      <div class="cell c7" data-name="Pink"></div>
+      <div class="cell c8" data-name="Gold"></div>
+    </div>
+
+    <div class="result" id="result">Press play to start the draw</div>
+
+    <div class="controls">
+      <button id="playBtn">▶ Play</button>
+      <button id="stopBtn" disabled>■ Stop</button>
+    </div>
+  </div>
+
+<script>
+  const cells = Array.from(document.querySelectorAll('.cell'));
+  const playBtn = document.getElementById('playBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const result = document.getElementById('result');
+
+  let current = 0;    // index of the currently active cell (0-8)
+  let interval = 70;  // ms, starts fast
+  let timerId = null;
+  let running = false;
+  let stopping = false;
+
+  function clearActive(){
+    cells.forEach(c => { c.classList.remove('active'); c.classList.remove('winner'); });
+  }
+
+  function setActive(i){
+    clearActive();
+    cells[i].classList.add('active');
+  }
+
+  // Pick a random cell, never the one that's already lit,
+  // so every tick visibly jumps instead of tracing a fixed path.
+  function nextRandom(exclude){
+    let i;
+    do { i = Math.floor(Math.random() * cells.length); } while (i === exclude);
+    return i;
+  }
+
+  function tick(){
+    current = nextRandom(current);
+    setActive(current);
+
+    if (stopping){
+      // ease the speed down instead of cutting it off instantly
+      interval *= 1.18;
+
+      if (interval > 480){
+        finish();
+        return;
+      }
+    }
+
+    timerId = setTimeout(tick, interval);
+  }
+
+  function finish(){
+    running = false;
+    stopping = false;
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+    const winnerCell = cells[current];
+    winnerCell.classList.add('winner');
+    result.innerHTML = `Landed on <b>${winnerCell.dataset.name}</b>`;
+  }
+
+  function play(){
+    if (running) return;
+    running = true;
+    stopping = false;
+    interval = 70;
+    result.textContent = 'Spinning…';
+    playBtn.disabled = true;
+    stopBtn.disabled = false;
+    clearActive();
+    tick();
+  }
+
+  function stop(){
+    if (!running || stopping) return;
+    stopping = true;
+    stopBtn.disabled = true;
+  }
+
+  playBtn.addEventListener('click', play);
+  stopBtn.addEventListener('click', stop);
+</script>
+
+</body>
+</html>

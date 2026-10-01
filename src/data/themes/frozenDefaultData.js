@@ -1,0 +1,98 @@
+/**
+ * Default Frozen themed bingo data
+ * Based on user's provided lists for Frozen Bingo
+ */
+
+const FROZEN_DATA = {
+  "S": [
+    "Elsa",
+    "Anna",
+    "Olaf",
+    "Kristoff",
+    "Sven",
+    "Hans",
+    "Oaken",
+    "Duke of Weselton",
+    "Grand Pabbie",
+    "Honeymaren",
+    "Ryder",
+    "Lieutenant Mattias",
+    "Shabs",
+    "Shawn",
+    "Marshmallow",
+  ],
+
+  "H": [
+    "Arendelle Castle",
+    "Arendelle Harbor",
+    "Arendelle Forest",
+    "Enchanted Forest",
+    "North Mountain",
+    "Wandering Oaken’s",
+    "Elsa’s Ice Palace",
+    "Ahtohallan",
+    "The Dam of Arendelle",
+    "The Royal Courtyard",
+    "The Great Hall",
+    "The Clock Tower",
+    "The Castle Gates",
+    "The Fjord",
+    "The Village of Arendelle",
+  ],
+
+  "A": [
+    "Elsa’s Crown",
+    "Anna’s Necklace",
+    "Kristoff’s Sled",
+    "Sven’s Carrot",
+    "Olaf’s Stick Arms",
+    "The Royal Scepter",
+    "The Royal Orb",
+    "Anna’s Coronation Dress",
+    "Elsa’s Ice Dress",
+    "The Nokk’s Bridle",
+    "Fifth Spirit Symbol",
+    "Gale’s Leaf",
+    "Snow Globe",
+    "Enchanted Scarf",
+    "Elsa’s Glove",
+  ],
+
+  "W": [
+    "Snowgies",
+    "The Nokk",
+    "Gale",
+    "Earth Giants",
+    "Fire Spirit",
+    "Water Spirit",
+    "Wind Spirit",
+    "Ice Wraiths",
+    "Reindeer",
+    "Magical Snowflakes",
+    "Elsa’s Ice Magic",
+    "Fifth Spirit",
+    "Trolls",
+    "The Northuldra",
+    "The Spirits of the Enchanted Forest",
+  ],
+
+  "N": [
+    "Let It Go",
+    "Do You Want to Build a Snowman?",
+    "For the First Time in Forever",
+    "Love Is an Open Door",
+    "In Summer",
+    "Fixer Upper",
+    "Into the Unknown",
+    "Show Yourself",
+    "Some Things Never Change",
+    "All Is Found",
+    "The Next Right Thing",
+    "When I Am Older",
+    "Lost in the Woods",
+    "Olaf’s Frozen Adventure",
+    "Eternal Winter",
+  ],
+};
+
+module.exports = { FROZEN_DATA };

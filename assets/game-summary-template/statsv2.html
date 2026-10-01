@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BINGAGO! Leaderboard</title>
+<style>
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-Medium.ttf') format('truetype');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+  }
+
+  :root{
+    --green-1:  #CDEFD5;
+    --green-2:  #ECFDF0;
+    --green-3:  #E5F9E7;
+    --green-4:  #DDF7E3;
+    --green-5:  #D6F5DD;
+    --green-6:  #CDEFD5;
+    --green-7:  #C4EBCB;
+    --green-8:  #B8E6C0;
+    --green-9:  #AFE2B8;
+    --green-10: #A5DDB0;
+    --green-11: #9CD9A8;
+    --green-12: #92D4A0;
+    --green-13: #88CF98;
+    --green-14: #7FCB90;
+    --green-15: #75C688;
+
+    --background: var(--green-1);
+    --panel: var(--green-6);
+    --dark-green: #165A3B;
+    --accent: var(--green-14);
+    --highlight: var(--green-15);
+    --text: #204f3c;
+    --label: #5d7a65;
+    --divider: var(--green-9);
+    --row-alt: var(--green-3);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:#DCEEDD;
+    font-family:'Baloo 2', 'Noto Sans', 'Ubuntu', 'Liberation Sans', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Symbol', sans-serif;
+    display:flex;
+    justify-content:center;
+    padding:0;
+  }
+  .card{
+    width:520px;
+    margin:auto;
+    background:var(--background);
+    box-shadow:0 0 40px rgba(0,0,0,0.15);
+    padding:12px 22px 24px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .header{ 
+    text-align:center; 
+    margin-bottom:0; 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+  }
+  .title{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:38px;
+    letter-spacing:2px;
+    color:var(--dark-green);
+    margin:0;
+    line-height:1;
+    margin-top:12px;
+  }
+  .subtitle{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:3px;
+    color:var(--dark-green);
+    margin:0;
+    line-height:1;
+    margin-top:2px;
+  }
+
+  .divider{
+    border:none;
+    border-top:2px dashed var(--divider);
+    margin:12px 0 8px;
+  }
+
+  .col-labels{
+    display:flex;
+    align-items:center;
+    padding:0 4px 8px;
+    font-size:14px;
+    letter-spacing:1px;
+    color:var(--label);
+    font-weight:600;
+    text-transform:uppercase;
+  }
+  .col-labels .player-col{ flex:1; }
+  .col-labels span{ width:38px; text-align:center; }
+  .col-labels .gt-label{ width:42px; text-align:center; }
+
+  .rows{ display:flex; flex-direction:column; gap:2px; }
+
+  .row{
+    display:flex;
+    align-items:center;
+    padding:10px 6px;
+    border-radius:0;
+  }
+  .row:nth-child(odd){ background:var(--row-alt); }
+
+  .row.birthday {
+    background: linear-gradient(90deg, #ff8aa8 0%, #ff5d8f 100%);
+    justify-content:center;
+    align-items:center;
+  }
+
+  .row.birthday .name {
+    color: #ffffff;
+  }
+
+  .name-birthday {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .rank{
+    width:26px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--highlight);
+    text-align:center;
+  }
+
+  .player-col{
+    flex:1;
+    display:flex;
+    align-items:center;
+    min-width:0;
+  }
+  .name{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:600;
+    font-size:20px;
+    color:var(--text);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .stat{
+    width:38px;
+    text-align:center;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:20px;
+  }
+  .stat.win{ color:#3E8E5A; }
+  .stat.loss{ color:var(--accent); }
+  .stat.games{ color:var(--text); }
+  .stat.gt{ color:var(--highlight); width:42px; }
+</style>
+</head>
+  <body>
+  <div class="card">
+
+    <div class="header">
+      <div class="title">BINGO BOARD</div>
+      <div class="subtitle">LEADERBOARD</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="col-labels">
+      <div class="player-col">Player</div>
+      <span>W</span>
+      <span>G</span>
+      <span class="gt-label">GT</span>
+      <span>STRK</span>
+    </div>
+
+    <div class="rows" id="rows">{{ROWS}}</div>
+
+  </div>
+
+</html>

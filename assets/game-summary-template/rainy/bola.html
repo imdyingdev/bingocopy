@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Rainy Bola</title>
+<style>
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('{{BALO2_MEDIUM}}') format('truetype');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('{{BALO2_SEMIBOLD}}') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('{{BALO2_BOLD}}') format('truetype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('{{BALO2_EXTRABOLD}}') format('truetype');
+    font-weight: 800;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100%;
+    width: 100%;
+    background: radial-gradient(circle at 50% -10%, #3d5bbf 0%, #08112d 35%, #020617 100%);
+    color: #eef6ff;
+    font-family: 'Baloo 2', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 36px;
+  }
+
+  .cloud {
+    position: absolute;
+    top: -120px;
+    width: 100%;
+    z-index: 2;
+    transform: scale(1.8);
+  }
+
+  .card {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 45px 110px rgba(0, 0, 0, 0.42);
+    background: linear-gradient(180deg, rgba(10, 23, 52, 0.98), rgba(4, 8, 24, 0.96));
+    backdrop-filter: blur(8px);
+    z-index: 1;
+    padding-top: 50px;
+    min-width: 200px;
+    width: fit-content;
+    max-width: 92vw;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('{{DROPLET_SRC}}');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 20%, rgba(100, 160, 255, 0.14), transparent 34%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 3;
+    padding: 14px 20px 14px;
+  }
+
+  .items {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: 8px 0 6px;
+    z-index: 3;
+  }
+
+  .item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+  }
+
+  .badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #5b8dff, #113d9d);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14), 0 20px 40px rgba(47, 84, 172, 0.24);
+    color: #fff;
+    font-size: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .category {
+    color: rgba(226, 236, 255, 0.72);
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .value {
+    color: #f9fbff;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.05;
+    word-break: break-word;
+  }
+
+  .footer {
+    margin-top: 18px;
+    text-align: center;
+    color: rgba(225, 238, 255, 0.65);
+    font-size: 14px;
+    letter-spacing: 0.9px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="cloud" src="{{CLOUD_SRC}}" alt="cloud" />
+    <div class="card-content">
+      <div class="items">
+        {{ITEMS}}
+      </div>
+    </div>
+    </div>
+</body>
+</html>

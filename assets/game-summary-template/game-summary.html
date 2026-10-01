@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game Summary</title>
+<style>
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-Medium.ttf') format('truetype');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Baloo 2';
+    src: url('../../assets/fonts/Baloo2/Baloo2-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+  }
+
+  /* ========================================
+   * COLOR VARIABLES - Edit these to change the theme!
+   * ========================================
+   * --page-bg-1/2/3 : Background gradient colors (top, middle, bottom)
+   * --card-bg       : Main card background color
+   * --card-border   : Card border color
+   * --brand         : "BINGAGO!" header text color
+   * --brand-sub     : "Game Summary" subtitle color
+   * --ink           : Main text color (labels, values)
+   * --ink-soft      : Softer text color (metadata like duration)
+   * --label         : Section labels color (Players, Patterns, etc.)
+   * --gold          : Prize amount color (peso values)
+   * --win-green     : Winner player name color
+   * --divider       : Dashed divider line color
+   * ======================================== */
+  :root {
+    --page-bg-1: #FBF3DF;
+    --page-bg-2: #EFDFB9;
+    --page-bg-3: #E4CE9C;
+
+    --card-bg: #FFFBF0;
+    --card-border: #E7D3A4;
+
+    --brand: #E1613F;
+    --brand-sub: #A88A5C;
+
+    --ink: #4A3A26;
+    --ink-soft: #8A7454;
+    --label: #7C6748;
+
+    --gold: #C1892E;
+    --win-green: #2C8C6D;
+
+    --divider: #E7D3A4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: radial-gradient(circle at 30% 0%, var(--page-bg-1) 0%, var(--page-bg-2) 55%, var(--page-bg-3) 100%);
+    display: flex;
+    justify-content: center;
+    padding: 0; /* removed body padding so card fills viewport horizontally */
+    font-family: 'Noto Sans', 'Ubuntu', 'Liberation Sans', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Symbol', sans-serif;
+  }
+
+  .card {
+    width: 560px; /* reduced to fit narrower layouts */
+    margin: auto;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 0; /* removed radius for square edges */
+    padding: 12px 0 12px; /* tightened vertical padding */
+    color: var(--ink);
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(140, 105, 45, 0.18), inset 0 0 0 1px rgba(255,255,255,0.6);
+  }
+
+  .brand-header {
+    text-align: center;
+    padding: 16px 36px 16px 36px;
+  }
+  .brand-header .brand-name {
+    font-family: 'Baloo 2', 'Noto Sans', 'Ubuntu', 'Liberation Sans', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Symbol', sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--brand);
+    text-shadow: 0 2px 0 rgba(225, 97, 63, 0.15);
+  }
+  .brand-header .brand-sub {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brand-sub);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .ticket-edge {
+    height: 0;
+    border-top: 2px dashed var(--divider);
+    margin: 0 36px;
+  }
+
+  .content { padding: 12px 36px 0 36px; }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Baloo 2', 'Noto Sans', 'Ubuntu', 'Liberation Sans', 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Symbol', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.2px;
+    margin-bottom: 12px;
+  }
+
+  .divider {
+    height: 0;
+    border-top: 2px dashed var(--divider);
+    margin: 18px 36px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 18px;
+  }
+
+  .row .label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--label);
+    font-weight: 700;
+  }
+
+  .row .value {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 20px;
+  }
+
+  .row .value.peso { color: var(--gold); }
+
+  .winner-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 22px;
+    gap: 12px;
+  }
+
+  .winner-row .pattern {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--label);
+    font-weight: 700;
+    min-width: 0;
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+
+  .winner-row .pattern > img,
+  .winner-row .pattern > span:not(.avatar-stack) {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .winner-row .pattern > img {
+    object-fit: cover;
+    background: #fff;
+  }
+
+  /* Avatar stack for multiple winners: overlap by 50% so you can see halves */
+  .stack { display: flex; align-items: center; flex-shrink: 0; min-width: 120px; }
+  .circle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    margin-left: -22px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .circle:first-child { margin-left: 0; }
+  .circle.empty { background: var(--label); }
+  .circle-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .winner-row .pattern > span:not(.stack) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #E1613F;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .winner-row .left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+  .winner-row .left .player-name {
+    font-weight: 800;
+    color: var(--win-green);
+    font-size: 20px;
+    min-width: 0;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .winner-row .left .amount { font-family: 'Baloo 2', sans-serif; color: var(--gold); font-weight: 800; font-size: 20px; }
+  .winner-row .right { color: var(--label); font-weight: 700; font-size: 16px; }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+
+  .meta-row .label { display: flex; align-items: center; gap: 11px; font-weight: 700; }
+  .meta-row .value { font-family: 'Baloo 2', sans-serif; color: var(--ink); font-weight: 700; font-size: 16px; }
+  .empty { color: var(--ink-soft); padding: 6px 0 2px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand-header">
+    <div class="brand-name">BINGAGO!</div>
+    <div class="brand-sub">Game Summary</div>
+  </div>
+
+  <div class="ticket-edge"></div>
+
+  <div class="content">
+    <div class="row"><span class="label">
+      <span style="font-size: 24px;">👥</span>
+      Players</span><span class="value">{{PLAYERS}}</span></div>
+
+    <div class="row"><span class="label">
+      <span style="font-size: 24px;">🎯</span>
+      Winning Patterns</span><span class="value">{{WINNING_PATTERNS}}</span></div>
+
+    <div class="row"><span class="label">
+      <span style="font-size: 24px;">💰</span>
+      Bet per Player</span><span class="value peso">{{BET_PER_PLAYER}}</span></div>
+
+    <div class="row"><span class="label">
+      <span style="font-size: 24px;">🧺</span>
+      Total Pot</span><span class="value peso">{{TOTAL_POT}}</span></div>
+
+    <div class="row"><span class="label">
+      <span style="font-size: 24px;">🏆</span>
+      Prize per Pattern</span><span class="value peso">{{PRIZE_PER_PATTERN}}</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    {{WINNERS}}
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="meta-row"><span class="label">
+      <span style="font-size: 20px;">🎲</span>
+      Balls Drawn</span><span class="value">{{BALLS_DRAWN}}</span></div>
+
+    <div class="meta-row"><span class="label">
+      <span style="font-size: 20px;">⏱️</span>
+      Duration</span><span class="value">{{DURATION}}</span></div>
+  </div>
+</div>
+
+</body>
+</html>

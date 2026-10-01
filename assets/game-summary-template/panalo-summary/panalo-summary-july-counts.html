@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panalo July Counts</title>
+<style>
+  @font-face {
+    font-family: 'Quicking';
+    src: url('../../assets/fonts/Stats/QuickingRegular.otf') format('opentype');
+    font-weight: 400;
+  }
+
+  :root {
+    --background: linear-gradient(180deg, #2bc064 0%, #2bc064 100%);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #163e29;
+    font-family: 'Quicking', sans-serif;
+  }
+
+  .card {
+    width: 720px;
+    height: 720px;
+    margin: auto;
+    position: relative;
+    background: var(--background);
+    box-shadow: 0 0 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('recap.png') center/cover no-repeat;
+    opacity: 0.98;
+    z-index: 0;
+  }
+
+  .card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stats {
+    width: 92%;
+    max-width: 680px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    backdrop-filter: blur(18px);
+    border-radius: 20px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    height: 180px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .stat-label {
+    color: rgba(255,255,255,0.88);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 72px;
+    color: #ffffff;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .subtitle {
+    margin-top: 24px;
+    color: rgba(255,255,255,0.82);
+    font-size: 18px;
+    text-align: center;
+    max-width: 620px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Players</div>
+        <div class="stat-value">{{TOTAL_PLAYERS}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Games</div>
+        <div class="stat-value">{{TOTAL_GAMES}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Bola Draws</div>
+        <div class="stat-value">{{TOTAL_BOLA_DRAWN}}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Bets</div>
+        <div class="stat-value">{{TOTAL_BETS}}</div>
+      </div>
+    </div>
+    <div class="subtitle">Counts all games with valid winners (including sponsored). Sponsored games excluded from total bets only.</div>
+  </div>
+</body>
+</html>
