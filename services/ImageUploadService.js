@@ -2,16 +2,19 @@
  * Image Upload Service - handles uploading images to ImageKit.io
  */
 
-const ImageKit = require("@imagekit/nodejs");
-const { toFile } = ImageKit;
+const { IMAGE_ENABLED } = require("../src/utils/imageSettings");
 
 class ImageUploadService {
   constructor() {
-    this.imagekit = new ImageKit({
-      urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    });
+    this.imagekit = null;
+    if (IMAGE_ENABLED) {
+      const ImageKit = require("@imagekit/nodejs");
+      this.imagekit = new ImageKit({
+        urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+        publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+      });
+    }
   }
 
   /**
@@ -22,6 +25,7 @@ class ImageUploadService {
    */
   async uploadImage(imageBuffer, filename) {
     try {
+      if (!this.imagekit) throw new Error("Image uploads are disabled");
       console.log(`📤 Uploading image to ImageKit.io: ${filename} (${imageBuffer.length} bytes)`);
       
       // Convert buffer to base64 data URL

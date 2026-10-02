@@ -5,7 +5,6 @@
 const { InputFile } = require("grammy");
 const fs = require("fs");
 const path = require("path");
-const { PNG } = require("pngjs");
 const { fisherYatesShuffle } = require("../../utils/helpers");
 const { DATA } = require("../../data/defaultData");
 const { SPONGEBOB_DATA } = require("../../data/themes/spongebobDefaultData");

@@ -9,21 +9,9 @@
     "generate-panalo-july": "node scripts/generate-panalo-july-summary.js"
   },
   "dependencies": {
-    "@fontsource/bebas-neue": "^5.2.7",
-    "@fontsource/figtree": "^5.2.10",
-    "@fontsource/fredoka-one": "^5.2.5",
-    "@fontsource/noto-sans-jp": "^5.3.0",
-    "@fontsource/nunito": "^5.2.7",
-    "@fontsource/slackey": "^5.2.7",
-    "@imagekit/nodejs": "^7.10.0",
-    "@napi-rs/canvas": "^0.1.53",
-    "@resvg/resvg-js": "^2.0.0",
     "dotenv": "^16.3.1",
     "grammy": "^1.46.0",
-    "imagekit": "^6.0.0",
-    "pg": "^8.20.0",
-    "pngjs": "^7.0.0",
-    "sharp": "^0.33.5"
+    "pg": "^8.20.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

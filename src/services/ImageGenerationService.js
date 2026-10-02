@@ -4,7 +4,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const { createCanvas, GlobalFonts } = require("@napi-rs/canvas");
+const { IMAGE_ENABLED } = require("../utils/imageSettings");
+const canvas = IMAGE_ENABLED ? require("@napi-rs/canvas") : null;
+const createCanvas = canvas?.createCanvas;
+const GlobalFonts = canvas?.GlobalFonts;
 const { THEME_FILES } = require("../constants/themes");
 
 // Simple in-memory cache with TTL
@@ -39,33 +42,35 @@ class Cache {
 const cache = new Cache();
 
 const FONT_DIR = path.join(__dirname, "..", "..", "assets", "fonts");
-if (fs.existsSync(path.join(FONT_DIR, "fredoka-one-latin-400-normal.woff2"))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, "fredoka-one-latin-400-normal.woff2"), "Fredoka One");
-}
-if (fs.existsSync(path.join(FONT_DIR, "slackey-latin-400-normal.ttf"))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, "slackey-latin-400-normal.ttf"), "Slackey");
-}
-if (fs.existsSync(path.join(FONT_DIR, "..", "..", "node_modules", "@fontsource", "nunito", "files", "nunito-latin-700-normal.woff2"))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, "..", "..", "node_modules", "@fontsource", "nunito", "files", "nunito-latin-700-normal.woff2"), "Nunito");
-}
-
-// Register optional wide-coverage fallback fonts if present
-if (fs.existsSync(path.join(FONT_DIR, 'Symbola.ttf'))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, 'Symbola.ttf'), 'Symbola');
-}
-if (fs.existsSync(path.join(FONT_DIR, 'NotoSansBengali-Regular.ttf'))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, 'NotoSansBengali-Regular.ttf'), 'NotoBengali');
-}
-if (fs.existsSync(path.join(FONT_DIR, 'NotoColorEmoji.ttf'))) {
-  GlobalFonts.registerFromPath(path.join(FONT_DIR, 'NotoColorEmoji.ttf'), 'NotoEmoji');
+if (IMAGE_ENABLED) {
+  if (fs.existsSync(path.join(FONT_DIR, "fredoka-one-latin-400-normal.woff2"))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, "fredoka-one-latin-400-normal.woff2"), "Fredoka One");
+  }
+  if (fs.existsSync(path.join(FONT_DIR, "slackey-latin-400-normal.ttf"))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, "slackey-latin-400-normal.ttf"), "Slackey");
+  }
+  if (fs.existsSync(path.join(FONT_DIR, "..", "..", "node_modules", "@fontsource", "nunito", "files", "nunito-latin-700-normal.woff2"))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, "..", "..", "node_modules", "@fontsource", "nunito", "files", "nunito-latin-700-normal.woff2"), "Nunito");
+  }
+  if (fs.existsSync(path.join(FONT_DIR, 'Symbola.ttf'))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, 'Symbola.ttf'), 'Symbola');
+  }
+  if (fs.existsSync(path.join(FONT_DIR, 'NotoSansBengali-Regular.ttf'))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, 'NotoSansBengali-Regular.ttf'), 'NotoBengali');
+  }
+  if (fs.existsSync(path.join(FONT_DIR, 'NotoColorEmoji.ttf'))) {
+    GlobalFonts.registerFromPath(path.join(FONT_DIR, 'NotoColorEmoji.ttf'), 'NotoEmoji');
+  }
 }
 
 const GIPHY_API_KEY = process.env.GIPHY_API_KEY;
 let playwright = null;
-try {
-  playwright = require("playwright");
-} catch (error) {
-  console.warn("Playwright not available, summary images will fall back to canvas rendering:", error.message);
+if (IMAGE_ENABLED) {
+  try {
+    playwright = require("playwright");
+  } catch (error) {
+    console.warn("Playwright not available, image rendering will use canvas:", error.message);
+  }
 }
 
 const getCanvasFont = (size, family = "Nunito", weight = "bold") =>
