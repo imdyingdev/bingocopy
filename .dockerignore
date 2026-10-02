@@ -5,10 +5,3 @@ npm-debug.log
 .gitignore
 logs
 .log
-
-# Generated-image output is disabled by default; remove these exclusions to re-enable it.
-assets/fonts/
-assets/game-summary-template/
-assets/images/
-assets/themes/
-assets/strngers.gif
