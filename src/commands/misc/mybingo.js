@@ -2,7 +2,6 @@
  * My Bingo command - displays user stats and BAC cards
  */
 
-const { chromium } = require("playwright");
 const { InputFile } = require("grammy");
 const { IMAGE_ENABLED } = require("../../utils/imageSettings");
 const fs = require("fs");
@@ -136,6 +135,7 @@ async function generateCalendarHTML(userId, gamesByDay) {
 }
 
 async function generateCalendarImageFromHTML(html) {
+  const { chromium } = require("playwright");
   const browser = await chromium.launch();
   const page = await browser.newPage();
   
