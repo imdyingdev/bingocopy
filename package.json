@@ -2,10 +2,10 @@
   "name": "bingo-tayo-bot",
   "version": "1.0.0",
   "description": "Spider-Man Gacha Bingo Bot for Telegram",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "generate-panalo-july": "node scripts/generate-panalo-july-summary.js"
   },
   "dependencies": {

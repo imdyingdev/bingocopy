@@ -1,7 +1,10 @@
-.git
 node_modules
-temp
-*.log
+npm-debug.log
+.git
+.env
+.gitignore
+logs
+.log
 
 # Generated-image output is disabled by default; remove these exclusions to re-enable it.
 assets/fonts/

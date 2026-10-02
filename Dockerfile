@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci --only=production
 
 COPY .env ./.env
 COPY . .
